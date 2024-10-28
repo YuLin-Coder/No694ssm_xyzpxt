@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.JobsDAO">
+  <resultMap type="jobs" id="jobsMap">
+    <id property="jobsid" column="jobsid" />
+    <result property="usersid" column="usersid" />
+    <result property="title" column="title" />
+    <result property="cateid" column="cateid" />
+    <result property="num" column="num" />
+    <result property="asignnum" column="asignnum" />
+    <result property="salary" column="salary" />
+    <result property="addtime" column="addtime" />
+    <result property="hits" column="hits" />
+    <result property="contents" column="contents" />
+    <result property="status" column="status" />
+    <result property="realname" column="realname" />
+    <result property="catename" column="catename" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertJobs" parameterType="jobs">
+    insert into jobs(jobsid , usersid , title , cateid , num , asignnum , salary , addtime , hits , contents , status ) values(#{jobsid} , #{usersid} , #{title} ,
+    #{cateid} , #{num} , #{asignnum} , #{salary} , #{addtime} , #{hits} , #{contents} , #{status} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateJobs" parameterType="jobs">
+    update jobs set usersid=#{usersid} , title=#{title} , cateid=#{cateid} , num=#{num} , asignnum=#{asignnum} , salary=#{salary} , addtime=#{addtime} , hits=#{hits} ,
+    contents=#{contents} , status=#{status} where jobsid=#{jobsid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteJobs" parameterType="String">
+    delete from jobs where jobsid = #{jobsid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllJobs" resultMap="jobsMap">
+    select a.* , b.realname , c.catename from jobs a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid order by jobsid desc
+  </select>
+
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getJobsById" parameterType="String" resultMap="jobsMap">
+    select a.* , b.realname , c.catename from jobs a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid and jobsid=#{jobsid} order by jobsid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getJobsByCond" parameterType="jobs" resultMap="jobsMap">
+    select a.* , b.realname , c.catename from jobs a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and a.usersid = #{usersid}
+    </if>
+    <if test="title != null and '' != title">
+      and a.title = #{title}
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and a.cateid = #{cateid}
+    </if>
+    <if test="num != null and '' != num">
+      and a.num = #{num}
+    </if>
+    <if test="asignnum != null and '' != asignnum">
+      and a.asignnum = #{asignnum}
+    </if>
+    <if test="salary != null and '' != salary">
+      and a.salary = #{salary}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits = #{hits}
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents = #{contents}
+    </if>
+    <if test="status != null and '' != status">
+      and a.status = #{status}
+    </if>
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getJobsByLike" parameterType="jobs" resultMap="jobsMap">
+    select a.* , b.realname , c.catename from jobs a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and b.realname like CONCAT('%', CONCAT(#{usersid}, '%'))
+    </if>
+    <if test="title != null and '' != title">
+      and a.title like CONCAT('%', CONCAT(#{title}, '%'))
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and c.catename like CONCAT('%', CONCAT(#{cateid}, '%'))
+    </if>
+    <if test="num != null and '' != num">
+      and a.num like CONCAT('%', CONCAT(#{num}, '%'))
+    </if>
+    <if test="asignnum != null and '' != asignnum">
+      and a.asignnum like CONCAT('%', CONCAT(#{asignnum}, '%'))
+    </if>
+    <if test="salary != null and '' != salary">
+      and a.salary like CONCAT('%', CONCAT(#{salary}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits like CONCAT('%', CONCAT(#{hits}, '%'))
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+    </if>
+    <if test="status != null and '' != status">
+      and a.status like CONCAT('%', CONCAT(#{status}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

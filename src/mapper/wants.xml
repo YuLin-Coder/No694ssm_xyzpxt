@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.WantsDAO">
+  <resultMap type="wants" id="wantsMap">
+    <id property="wantsid" column="wantsid" />
+    <result property="usersid" column="usersid" />
+    <result property="title" column="title" />
+    <result property="cateid" column="cateid" />
+    <result property="salary" column="salary" />
+    <result property="addtime" column="addtime" />
+    <result property="hits" column="hits" />
+    <result property="contents" column="contents" />
+    <result property="status" column="status" />
+    <result property="username" column="username" />
+    <result property="catename" column="catename" />
+    <result property="contact" column="contact" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertWants" parameterType="wants">
+    insert into wants(wantsid , usersid , title , cateid , salary , addtime , hits , contents , status )
+    values(#{wantsid} , #{usersid} , #{title} , #{cateid} ,
+    #{salary} , #{addtime} , #{hits} , #{contents} , #{status} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateWants" parameterType="wants">
+    update wants set usersid=#{usersid} , title=#{title} , cateid=#{cateid} , salary=#{salary} , addtime=#{addtime}
+    , hits=#{hits} , contents=#{contents} ,
+    status=#{status} where wantsid=#{wantsid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteWants" parameterType="String">
+    delete from wants where wantsid = #{wantsid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllWants" resultMap="wantsMap">
+    select a.* , b.username , b.contact , c.catename from wants a , users b , cate c where a.usersid = b.usersid and
+    a.cateid = c.cateid order by wantsid desc
+  </select>
+
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getWantsById" parameterType="String" resultMap="wantsMap">
+    select a.* , b.username , b.contact , c.catename from wants a , users b , cate c where
+    a.usersid = b.usersid and a.cateid = c.cateid and wantsid=#{wantsid} order by
+    wantsid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getWantsByCond" parameterType="wants" resultMap="wantsMap">
+    select a.* , b.username , b.contact , c.catename from wants a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and a.usersid = #{usersid}
+    </if>
+    <if test="title != null and '' != title">
+      and a.title = #{title}
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and a.cateid = #{cateid}
+    </if>
+    <if test="salary != null and '' != salary">
+      and a.salary = #{salary}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits = #{hits}
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents = #{contents}
+    </if>
+    <if test="status != null and '' != status">
+      and a.status = #{status}
+    </if>
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getWantsByLike" parameterType="wants" resultMap="wantsMap">
+    select a.* , b.username , b.contact , c.catename from wants a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+    </if>
+    <if test="title != null and '' != title">
+      and a.title like CONCAT('%', CONCAT(#{title}, '%'))
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and c.catename like CONCAT('%', CONCAT(#{cateid}, '%'))
+    </if>
+    <if test="salary != null and '' != salary">
+      and a.salary like CONCAT('%', CONCAT(#{salary}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits like CONCAT('%', CONCAT(#{hits}, '%'))
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+    </if>
+    <if test="status != null and '' != status">
+      and a.status like CONCAT('%', CONCAT(#{status}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
